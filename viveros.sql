@@ -225,6 +225,81 @@ INSERT INTO cliente_bonificacion (id_cliente, id_bonificacion, anio, mes) VALUES
 (5, 5, 2026, 9);
 
 
+-- EJEMPLOS DE DELETE PARA LA BASE DE DATOS viveros
+
+
+
+-- ------------------------------------------------------------
+-- 1. BORRADO NORMAL
+-- ------------------------------------------------------------
+-- Intentamos eliminar el producto cuyo identificador es 5.
+-- El borrado solo funcionará si ninguna otra tabla lo referencia.
+--
+-- En este esquema, detalle_pedido y stock_zona_producto tienen claves
+-- foráneas hacia producto y no se definió ON DELETE CASCADE para ellas.
+-- Por tanto, si el producto aparece en alguna de esas tablas, PostgreSQL
+-- rechazará el borrado para evitar dejar referencias inválidas.
+--
+-- Para consultar antes si el producto está referenciado, puedes ejecutar:
+--
+-- SELECT * FROM detalle_pedido WHERE id_producto = 5;
+-- SELECT * FROM stock_zona_producto WHERE id_producto = 5;
+--
+-- DELETE FROM producto
+-- WHERE id_producto = 5;
+
+
+-- ------------------------------------------------------------
+-- 2. BORRADO EN CASCADA 
+-- ------------------------------------------------------------
+-- La tabla zona referencia a vivero con ON DELETE CASCADE.
+-- Además, stock_zona_producto referencia a zona también con
+-- ON DELETE CASCADE.
+--
+-- Al eliminar un vivero, PostgreSQL elimina automáticamente sus zonas.
+-- Como consecuencia, también elimina las filas de stock asociadas a
+-- esas zonas.
+--
+-- Antes de probarlo, puedes consultar qué zonas pertenecen al vivero:
+--
+-- SELECT * FROM zona WHERE id_vivero = 5;
+
+-- DELETE FROM vivero
+-- WHERE id_vivero = 5;
+
+
+-- ------------------------------------------------------------
+-- 3. BORRADO RESTRINGIDO POR UNA CLAVE FORÁNEA
+-- ------------------------------------------------------------
+-- Intentamos eliminar el empleado cuyo identificador es 1.
+-- Si ese empleado tiene pedidos asociados, PostgreSQL impedirá el borrado,
+-- porque pedido.id_empleado referencia empleado.id_empleado y esa clave
+-- foránea no tiene ON DELETE CASCADE.
+--
+-- Puedes consultar primero los pedidos del empleado:
+--
+-- SELECT * FROM pedido WHERE id_empleado = 1;
+
+-- DELETE FROM empleado
+-- WHERE id_empleado = 1;
+
+
+-- ============================================================
+-- RESUMEN
+-- ============================================================
+-- Borrado normal:
+--   Elimina una fila si no está referenciada por otras tablas.
+--
+-- Borrado en cascada:
+--   ON DELETE CASCADE elimina automáticamente las filas dependientes.
+--
+-- Borrado restringido:
+--   PostgreSQL impide borrar una fila que sigue siendo referenciada
+--   cuando la clave foránea no permite la eliminación en cascada.
+-- ============================================================
+
+
+
 COMMIT;
 
 
