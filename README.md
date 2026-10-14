@@ -4,7 +4,6 @@
 
 ## Resumen de atributos calculables en la base de datos viveros
 
-*Este documento resume los atributos del esquema que pueden obtenerse calculando otros datos almacenados. Que un atributo sea calculable no significa necesariamente que deba eliminarse de la tabla: depende de los requisitos del enunciado y de si se necesita guardar un valor histórico.*
 ## 1. Tabla `pedido`
 
 - **Atributo:** `importe_total`
