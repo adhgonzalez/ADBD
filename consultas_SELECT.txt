@@ -1,0 +1,112 @@
+viveros=# SELECT * FROM vivero;
+ id_vivero |     nombre     |  longitud  |  latitud  
+-----------+----------------+------------+-----------
+         1 | Vivero Norte   | -16.300100 | 28.480100
+         2 | Vivero Sur     | -16.250200 | 28.420200
+         3 | Vivero Este    | -16.200300 | 28.450300
+         4 | Vivero Oeste   | -16.350400 | 28.460400
+         5 | Vivero Central | -16.280500 | 28.440500
+(5 rows)
+
+viveros=# SELECT * FROM zona;
+ id_zona |     nombre_zona     |  longitud  |  latitud  | id_vivero
+---------+---------------------+------------+-----------+-----------
+       1 | Zona de sombra      | -16.300110 | 28.480110 |         1
+       2 | Zona de exterior    | -16.300120 | 28.480120 |         1
+       3 | Zona de invernadero | -16.250210 | 28.420210 |         2
+       4 | Zona de aromáticas  | -16.200310 | 28.450310 |         3
+       5 | Zona de árboles     | -16.350410 | 28.460410 |         4
+(5 rows)
+
+viveros=# SELECT * FROM producto;
+ id_producto |  nombre_producto   |     categoria      | precio 
+-------------+--------------------+--------------------+--------
+           1 | Monstera deliciosa | Planta de interior |  18.50
+           2 | Lavanda            | Aromática          |   6.75
+           3 | Olivo joven        | Árbol              |  24.00
+           4 | Geranio            | Planta de exterior |   4.50
+           5 | Sustrato universal | Sustrato           |   8.25
+(5 rows)
+
+viveros=# SELECT * FROM stock_zona_producto;
+ id_zona | id_producto | cantidad 
+---------+-------------+----------
+       1 |           1 |       35
+       1 |           5 |       80
+       2 |           4 |      120
+       3 |           1 |       20
+       4 |           2 |       65
+       5 |           3 |       18
+(6 rows)
+
+viveros=# SELECT * FROM empleado;
+ id_empleado |      nombre      | telefono  
+-------------+------------------+-----------
+           1 | Lucía Pérez      | 600123001
+           2 | Marcos Díaz      | 600123002
+           3 | Sara González    | 600123003
+           4 | Daniel Rodríguez | 600123004
+           5 | Elena Martín     | 600123005
+(5 rows)
+
+viveros=# SELECT * FROM asignacion_empleado_zona;
+ id_asignacion | id_zona | id_empleado | fecha_inicio | fecha_fin  |           puesto           
+---------------+---------+-------------+--------------+------------+----------------------------
+             1 |       1 |           1 | 2025-01-10   | 2025-06-30 | Encargada de zona
+             2 |       2 |           1 | 2025-07-01   | 2025-12-31 | Responsable de exterior
+             3 |       3 |           2 | 2025-02-01   | 2025-08-31 | Operario de invernadero
+             4 |       4 |           3 | 2025-03-01   |            | Especialista en aromáticas
+             5 |       5 |           4 | 2025-04-01   | 2025-10-31 | Encargado de árboles
+(5 rows)
+
+viveros=# SELECT * FROM cliente;
+ id_cliente |    nombre_cliente    | fecha_ingreso | volumen_mensual 
+------------+----------------------+---------------+-----------------
+          1 | Jardines Atlántico   | 2024-01-15    |             850
+          2 | Floristería La Palma | 2024-03-10    |             420
+          3 | Hotel Mirador        | 2025-02-01    |            1250
+          4 | Comunidad Los Cedros | 2025-05-20    |             300
+          5 | Paisajismo Verde     | 2025-07-01    |            1750
+(5 rows)
+
+viveros=# SELECT * FROM pedido;
+ id_pedido | fecha_compra | importe_total | id_empleado | id_cliente 
+-----------+--------------+---------------+-------------+------------
+         1 | 2026-09-02   |         55.50 |           1 |          1
+         2 | 2026-09-05   |         40.50 |           2 |          2
+         3 | 2026-09-08   |         96.00 |           3 |          3
+         4 | 2026-09-12   |         33.00 |           4 |          4
+         5 | 2026-09-15   |         82.50 |           5 |          5
+(5 rows)
+
+viveros=# SELECT * FROM detalle_pedido;
+ id_producto | id_pedido | cantidad | precio_unitario 
+-------------+-----------+----------+-----------------
+           1 |         1 |        3 |           18.50
+           4 |         2 |        9 |            4.50
+           3 |         3 |        4 |           24.00
+           5 |         4 |        4 |            8.25
+           2 |         5 |       10 |            6.75
+           4 |         5 |        3 |            4.50
+(6 rows)
+
+viveros=# SELECT * FROM bonificacion;
+ id_bonificacion |  nombre  | volumen_minimo | importe_bonificacion 
+-----------------+----------+----------------+----------------------
+               1 | Bronce   |         100.00 |                 5.00
+               2 | Plata    |         300.00 |                15.00
+               3 | Oro      |         500.00 |                30.00
+               4 | Platino  |        1000.00 |                60.00
+               5 | Diamante |        1500.00 |               100.00
+(5 rows)
+
+
+viveros=# SELECT * FROM cliente_bonificacion;
+ id_cliente | id_bonificacion | anio | mes 
+------------+-----------------+------+-----
+          1 |               3 | 2026 |   9
+          2 |               2 | 2026 |   9
+          3 |               4 | 2026 |   9
+          4 |               1 | 2026 |   9
+          5 |               5 | 2026 |   9
+(5 rows)
